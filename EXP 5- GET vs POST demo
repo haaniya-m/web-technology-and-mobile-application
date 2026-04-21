@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GET vs POST Demo</title>
+</head>
+<body>
+
+<h2>HTTP GET Method</h2>
+<form action="MethodServlet" method="get">
+    Name: <input type="text" name="name"><br><br>
+    <input type="submit" value="Submit using GET">
+</form>
+
+<hr>
+
+<h2>HTTP POST Method</h2>
+<form action="MethodServlet" method="post">
+    Name: <input type="text" name="name"><br><br>
+    <input type="submit" value="Submit using POST">
+</form>
+
+</body>
+</html>
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class MethodServlet extends HttpServlet {
+
+    // Handles GET request
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response)
+                      throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String name = request.getParameter("name");
+
+        out.println("<html><body>");
+        out.println("<h2>Data received using GET method</h2>");
+        out.println("<p>Name: " + name + "</p>");
+        out.println("<p>Data is visible in the URL.</p>");
+        out.println("</body></html>");
+    }
+
+    // Handles POST request
+    public void doPost(HttpServletRequest request,
+                       HttpServletResponse response)
+                       throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String name = request.getParameter("name");
+
+        out.println("<html><body>");
+        out.println("<h2>Data received using POST method</h2>");
+        out.println("<p>Name: " + name + "</p>");
+        out.println("<p>Data is NOT visible in the URL.</p>");
+        out.println("</body></html>");
+    }
+}
+<web-app>
+
+    <servlet>
+        <servlet-name>MethodServlet</servlet-name>
+        <servlet-class>MethodServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MethodServlet</servlet-name>
+        <url-pattern>/MethodServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>
